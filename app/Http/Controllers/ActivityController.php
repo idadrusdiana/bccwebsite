@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Activities;
 
 class ActivityController extends Controller
 {
@@ -13,7 +14,9 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return view('pages.activity');
+        $data_activities = Activities::all();
+
+        return view('admin.activities.index', ['data_activities'=>$data_activities]);
     }
 
     /**
@@ -21,54 +24,50 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data_activities = Activities::create($request->all());
+        $data_activities->title = $request->title;
+        $data_activities->description = $request->description;
+        if ($request->hasFile('image')) {
+            $request->file('image')->move('image/', $request->file('image')->getClientOriginalName());
+            $data_activities->image = $request->file('image')->getClientOriginalName();
+            $data_activities->save();
+        }
+
+        return redirect()->route('activity')->with('sukses','Data berhasil diinput');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $data_activities = Activities::find($id);
+
+        return view('admin.activities.edit', ['data_activities'=>$data_activities]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data_activities = Activities::find($id);
+        $data_activities->update($request->all());
+        $data_activities->title = $request->title;
+        $data_activities->description = $request->description;
+        if ($request->hasFile('image')) {
+            $request->file('image')->move('image/', $request->file('image')->getClientOriginalName());
+            $data_activities->image = $request->file('image')->getClientOriginalName();
+            $data_activities->save();
+        }
+
+        return redirect()->route('activity')->with('sukses', 'Data berhasil di update');
     }
 
     /**
@@ -77,8 +76,11 @@ class ActivityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data_activities = Activities::find($id);
+        $data_activities->delete();
+
+        return redirect()->route('activity')->with('sukses', 'Data berhasil dihapus');
     }
 }

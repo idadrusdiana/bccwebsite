@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Contacts;
+use Prophecy\Doubler\Generator\Node\ReturnTypeNode;
 
 class ContactController extends Controller
 {
@@ -13,72 +15,47 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('pages.contactus');
+        $data_contacts = Contacts::all();
+
+        return view('admin.contacts.index', ['data_contacts' => $data_contacts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data_contacts = Contacts::create($request->all());
+        $data_contacts->alamat = $request->alamat;
+        $data_contacts->no_telephone = $request->no_telephone;
+        $data_contacts->email = $request->email;
+        $data_contacts->website = $request->website;
+
+        return redirect()->route('contact')->with('sukses', 'Data berhasil diinput');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $data_contacts = Contacts::find($id);
+
+        return view('admin.contacts.edit', ['data_contacts' => $data_contacts ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data_contacts = Contacts::find($id);
+        $data_contacts->update($request->all());
+
+        return redirect()->route('contact')->with('sukses', 'Data berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data_contacts = Contacts::find($id);
+        $data_contacts->delete();
+
+        return redirect()->route('contact')->with('sukses', 'Data berhasil dihapus');
     }
 }

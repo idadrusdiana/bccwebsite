@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Galleries;
 
 class GalleryController extends Controller
 {
@@ -13,7 +14,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('pages.gallery');
+        $data_galleries = Galleries::all();
+
+        return view('admin.galleries.index',['data_galleries'=>$data_galleries]);
     }
 
     /**
@@ -21,54 +24,50 @@ class GalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data_galleries = Galleries::create($request->all());
+        $data_galleries->title = $request->title;
+        $data_galleries->description = $request->description;
+        if ($request->hasFile('image')) {
+            $request->file('image')->move('image/', $request->file('image')->getClientOriginalName());
+            $data_galleries->image = $request->file('image')->getClientOriginalName();
+            $data_galleries->save();
+        }
+        return redirect()->route('gallery')->with('sukses', 'Data berhasil diinput');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $data_galleries = Galleries::find($id);
+
+        return view('admin.galleries.edit', ['data_galleries'=>$data_galleries]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $data_galleries = Galleries::find($id);
+        $data_galleries->update($request->all());
+        $data_galleries->title = $request->title;
+        $data_galleries->description = $request->description;
+        if ($request->hasFile('image')) {
+            $request->file('image')->move('image/', $request->file('image')->getClientOriginalName());
+            $data_galleries->image = $request->file('image')->getClientOriginalName();
+            $data_galleries->save();
+        }
+
+        return redirect()->route('gallery')->with('sukses', 'Data berhasil diupdate');
     }
 
     /**
@@ -77,8 +76,11 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $data_galleries = Galleries::find($id);
+        $data_galleries->delete();
+
+        return redirect()->route('gallery')->with('sukses', 'Data berhasil dihapus');
     }
 }

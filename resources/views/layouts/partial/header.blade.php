@@ -6,11 +6,12 @@
         </button>
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
+                {{--  //kode di bawah ini yaitu dari "nav-item {{ request()->path()=... }}"" adalah berfungsi ketika di klik salah satu menu maka akan aktif menu yang kita klik"  --}}
                 <li class="nav-item {{ request()->path() == 'home' ? 'active' : '' }}"><a href="/home" class="nav-link pl-0">Home</a></li>
                 <li class="nav-item {{ request()->path() == 'activity' ? 'active' : '' }}"><a href="/activity" class="nav-link">Activity</a></li>
                 <li class="nav-item {{ request()->path() == 'gallery' ? 'active' : ''}}"><a href="/gallery" class="nav-link">Gallery</a></li>
                 <li class="nav-item {{ request()->path() == 'about' ? 'active' : '' }}"><a href="/about" class="nav-link">About Us</a></li>
-                <li class="nav-item {{ request()->path() == 'contactus' ? 'active' : '' }}"><a href="/contactus" class="nav-link">Contact Us</a></li>	        	
+                <li class="nav-item {{ request()->path() == 'contactus' ? 'active' : '' }}"><a href="/contactus" class="nav-link">Contact Us</a></li>
             </ul>
         </div>
     </div>
