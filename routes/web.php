@@ -63,4 +63,9 @@ Route::post('/contact/create', 'ContactController@create')->name('contact.create
 Route::get('/contact/{id}/edit', 'ContactController@edit')->name('contact.edit');
 Route::post('/contact/{id}/update', 'ContactController@update')->name('contact.update');
 Route::get('/contact/{id}/delete', 'ContactController@delete')->name('contact.delete');
-
+// Donatur
+Route::get('/donatur', 'DonaturController@index')->name('donatur');
+Route::post('donatur/create', 'DonaturController@create')->name('donatur.create');
+Route::get('/donatur/{id}/edit', 'DonaturController@edit')->name('donatur.edit');
+Route::post('/donatur/{id}/update', 'DonaturController@update')->name('donatur.update');
+Route::get('/donatur/{id}/delete', 'DonaturController@delete')->name('donatur.delete');

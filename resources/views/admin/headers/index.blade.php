@@ -18,7 +18,7 @@
                         <!-- BORDERED TABLE -->
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Header Table</h3>
+                                <h3 class="panel panel-title">Header Table</h3>
                                 <div class="right">
                                     <a type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tambahdata">
                                         Tambah Data
@@ -29,7 +29,6 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-
                                             <th >No</th>
                                             <th>Title</th>
                                             <th>Logo</th>
@@ -62,31 +61,30 @@
     <div class="modal fade" id="tambahdata" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Form Header</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form action="{{ route('header.create') }}" method="POST" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Title</label>
-                  <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                  <img src="{{}}" alt="" srcset="">
-                </div>
-                <div>
-                    <label for="example">Logo</label>
-                    <input type="file" name="logo" class="form">
-                </div>
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Header</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('header.create') }}" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title</label>
+                        <input type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <img src="{{}}" alt="" srcset="">
+                    </div>
+                    <div>
+                        <label for="example">Logo</label>
+                        <input type="file" name="logo" class="form">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
     </div>
